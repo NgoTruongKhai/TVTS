@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-lg bg-dark bg-opacity-75 ">
+<nav class="navbar navbar-expand-lg bg-dark bg-opacity-75 shadow sticky-top">
     <div class="container">
-        <a class="navbar-brand text-white" href="#">Trang chủ</a>
+        <a class="navbar-brand text-white" href="{{ route('home') }}">Trang chủ</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -8,8 +8,8 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item dropdown ">
-                    <a class="nav-link dropdown-toggle text-white btn-outline-success me-2" href="#"
-                        role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle text-white me-2" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
                         Tư vấn chọn ngành học
                     </a>
                     <ul class="dropdown-menu">

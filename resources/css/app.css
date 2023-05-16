@@ -13,6 +13,7 @@
     scroll-behavior: smooth;
   }
   
+  
   body {
     font-family: "Open Sans", sans-serif;
     background: #f6f9ff;
@@ -1231,3 +1232,9 @@
     font-size: 13px;
     color: #012970;
   }
+
+  .bg-image-banner {
+    background-image: url('https://www.google.com/url?sa=i&url=https%3A%2F%2Fcei.vn%2Fhoi-dap%2Fhoc-phi-dai-hoc-sai-gon-tp-hcm-nhu-the-nao%2F&psig=AOvVaw3HO1J1lA4flx4hm7d8HW1C&ust=1684051217343000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCLD2gOfp8f4CFQAAAAAdAAAAABAE');
+    height: fit-content;
+  }
+  
