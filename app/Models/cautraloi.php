@@ -13,6 +13,6 @@ class cautraloi extends Model
         'id',
         'noi_dung',
         'id_cau_hoi',
-        'id_nhom_nganh'
+        'ma_nhom_nganh'
     ];
 }

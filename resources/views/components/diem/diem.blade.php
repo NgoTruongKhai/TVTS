@@ -1,20 +1,18 @@
-<div class="container w-50">
-    <table class="table">
+<div class="container">
+    <table class="table table-striped">
         <thead>
-            <tr>
-                <th>Kết quả</th>
-            </tr>
+            <th>Mã Ngành</th>
+            <th>Tên Ngành</th>
+            <th>Mô tả</th>
         </thead>
         <tbody>
-            <tr>
-                <td>Ngành kế toán</td>
-            </tr>
-            <tr>
-                <td>Ngành công nghệ thông tin</td>
-            </tr>
-            <tr>
-                <td>Ngành ký thuật ô tô</td>
-            </tr>
+            @foreach ($nganh as $item)
+                <tr>
+                    <td>{{ $item->ma_nganh }}</td>
+                    <td>{{ $item->ten_nganh }}</td>
+                    <td>{{ $item->thong_tin_nganh_hoc }}</td>
+                </tr>
+            @endforeach
         </tbody>
     </table>
 </div>

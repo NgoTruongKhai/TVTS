@@ -6,7 +6,14 @@ use App\Models\cauhoi;
 use App\Models\cautraloi;
 use Illuminate\Http\Request;
 use App\Models\Country;
+use App\Models\diem;
+use App\Models\hocluc;
+use App\Models\khanang;
+use App\Models\khoithi;
+use App\Models\monthi;
+use App\Models\nganh;
 use App\Models\nhomnganh;
+use App\Models\sothich;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -15,25 +22,48 @@ class TVTSController extends Controller
 {
     public function diem()
     {
-
-        return view('components.diem.form');
+        $khoithi = khoithi::all();
+        return view('components.diem.form', compact('khoithi'));
     }
+
+    public function getmonthi($id)
+    {
+        $khoithi = khoithi::where('ten_khoi_thi', $id)->first();
+        return $khoithi;
+    }
+
     public function resultdiem(Request $request)
     {
-        dd($request);
+        $diem['mon1'] = $request->diem1;
+        $diem['mon2'] = $request->diem2;
+        $diem['mon3'] = $request->diem3;
+        $khoithi = $request->khoithi;
+        $sumdiem = array_sum($diem);
+        $nam = diem::max('nam');
+        // return $nam;
+        $ma_nganh = diem::where('diem', '<=', $sumdiem)->where('khoi_thi', $khoithi)->where('nam', $nam)->select('ma_nganh')->get();
+
+        $nganh = nganh::whereIn('ma_nganh', $ma_nganh)->get();
+        $khoithi = khoithi::all();
+        return view('components.diem.form', compact('khoithi', 'nganh'));
     }
+
+
     public function holland()
     {
-        $nhom_nganh = nhomnganh::all();
+        $nhomnganh = nhomnganh::all();
         $cauhoi = cauhoi::all();
-        foreach ($nhom_nganh as $item) {
-            foreach ($cauhoi as $ite) {
-                $data[$item->ma_nhom][$ite->id] = cautraloi::where('ma_nhom_nganh', $item->id)->where('id_cau_hoi', $ite->id)->get();
-            }
-        }
-        // return response()->json($data);
-        return view('components.holland.form', compact('data', 'cauhoi'));
+        $cautraloi = cautraloi::all();
+        // foreach ($nhom_nganh as $item) {
+        //     foreach ($cauhoi as $ite) {
+        //         $data[$item->ma_nhom][$ite->id] = cautraloi::where('ma_nhom_nganh', $item->ma_nhom)->where('id_cau_hoi', $ite->id)->get();
+        //     }
+        // }
+        // return response()->json($cauhoi);
+        return view('components.holland.form', compact('nhomnganh', 'cauhoi', 'cautraloi'));
     }
+
+
     public function resultHolland(Request $request)
     {
         $nhom_nganh = nhomnganh::all();
@@ -62,5 +92,30 @@ class TVTSController extends Controller
         // var_dump($result[0][0]->mo_ta);
         // die;
         return view('components.holland.form', compact('result', 'nhom_nganh'));
+    }
+
+    public function kethop()
+    {
+        $nhomnganh = nhomnganh::all();
+        $hocluc = hocluc::all();
+        $sothich = sothich::all();
+        $khanang = khanang::all();
+        return view('components.kethop.index', compact('nhomnganh', 'hocluc', 'khanang', 'sothich'));
+    }
+
+    public function result(Request $request)
+    {
+        return response()->json($request);
+        $advisor = new SuyDienController();
+        $userprofile['so_thich'] = $request->so_thich;
+        $userprofile['kha_nang'] = $request->kha_nang;
+        $userprofile['hoc_luc'] = $request->hoc_luc;
+        $userprofile['nganh_nghe'] = $request->nganh_nghe;
+        $userprofile['khoi_thi'] = $request->khoi_thi;
+
+        $advisor->addUserProfile($userprofile);
+        $recommendedMajors = $advisor->recommendMajor();
+
+        return response()->json($recommendedMajors);
     }
 }

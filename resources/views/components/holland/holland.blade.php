@@ -39,6 +39,7 @@
             <th>Tên Nhóm</th>
             <th>Thuộc nhóm người</th>
             <th>Mô tả</th>
+            <th>Một số ngành liên quan</th>
         </tr>
     </thead>
     <tbody>
@@ -48,6 +49,7 @@
                 <td>{{ $item->ten_nhom_nganh }}</td>
                 <td>{{ $item->ten_nhom_nguoi }}</td>
                 <td>{{ $item->mo_ta }}</td>
+                <td>{{ $item->nganh }}</td>
             </tr>
         @endforeach
     </tbody>

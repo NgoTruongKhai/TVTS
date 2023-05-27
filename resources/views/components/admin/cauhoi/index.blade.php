@@ -13,55 +13,42 @@
         </div><!-- End Page Title -->
         <section class="section">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-8">
                     <div class="card">
-                        <div class="mt-3">
-                            <form action="" method="post">
-                                @csrf
-                                <div class="row mb-2 float-end">
-                                    {{-- <label for="name" class="col-sm-2 col-form-label">Nội dung câu hỏi</label> --}}
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="name" name="name"
-                                            placeholder="Thêm câu hỏi mới">
-                                    </div>
-                                    <div class="col-sm-2"><button class="btn btn-success">Thêm</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+
+                        @if (Session::has('alert'))
+                            @include('components.message.alert')
+                        @endif
+
                         <div class="card-body">
+                            <div class="card-title fw-bold fs-4 text-center">Danh sách câu hỏi</div>
                             <!-- Table with stripped rows -->
                             <table class="table datatable">
                                 <thead>
                                     <tr>
-                                        <th scope="col">#</th>
+                                        <th scope="col">ID</th>
                                         <th scope="col">Câu hỏi</th>
+                                        <th scope="col">Cập nhật</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td scope='row'>1</td>
-                                        <td>Câu hỏi số 1</td>
-                                    </tr>
-                                    {{-- @if (isset($result))
-                                        @php
-                                            $index = 1;
-                                        @endphp
+                                    @isset($result)
                                         @foreach ($result as $item)
                                             <tr>
-                                                <th scope="row">{{ $index++ }}</th>
-                                                <td>{{ $item->ma_nhom }}</td>
-                                                <td>{{ $item->ten_nhom }}</td>
-                                                <td>{{ $item->mo_ta }}</td>
-                                                <td>{{ $item->created_at }}</td>
+                                                <td>{{ $item->id }}</td>
+                                                <td>{{ $item->noi_dung }}</td>
+                                                <td>{{ $item->updated_at }}</td>
                                                 <td>
-                                                    <button class="btn btn-danger rounded-pill">Xóa</button>
-                                                    <button class="btn btn-warning rounded-pill">Sửa</button>
+                                                    <a href="{{ route('delete-cau-hoi', ['id' => $item->id]) }}"
+                                                        class="btn btn-danger rounded-pill" data-bs-toggle="modal"
+                                                        data-bs-target="#exampleModal" onclick="return follow(this);">Xóa</a>
+                                                    <button class="btn btn-warning rounded-pill"
+                                                        onclick="setcauhoi({{ $item }})">Sửa</button>
                                                 </td>
                                             </tr>
                                         @endforeach
-                                    @endif --}}
-
+                                    @endisset
                                 </tbody>
                             </table>
                             <!-- End Table with stripped rows -->
@@ -70,8 +57,43 @@
                     </div>
 
                 </div>
+                <div class="col-lg-4">
+                    <div class="card ">
+
+                        <div class="card-body ">
+                            <form action="" method="POST">
+                                @csrf
+                                <div class="row mb-3">
+                                    <label for="code" class="col-sm-4 col-form-label">ID</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="ID" name='id' readonly>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="name" class="col-sm-4 col-form-label">Nội dung</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="noi_dung" name="noi_dung">
+                                    </div>
+                                </div>
+
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary">Lưu</button>
+                                    <button type="button" class="btn btn-primary" onclick="reset()">reset</button>
+                                </div>
+                                <script>
+                                    function reset() {
+                                        document.getElementById('ID').value = $ma_luat;
+                                        document.getElementById('noi_dung').value = '';
+                                    }
+                                </script>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
-
+        <!--comfirm delete--->
+        @include('components.message.confirm')
+        <!--comfirm delete--->
     </main><!-- End #main -->
 @endsection

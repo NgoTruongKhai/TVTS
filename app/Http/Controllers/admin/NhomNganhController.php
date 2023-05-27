@@ -9,6 +9,7 @@ use App\Models\nhomnganh;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
 
 class NhomNganhController extends Controller
 {
@@ -25,58 +26,65 @@ class NhomNganhController extends Controller
 
     public function loadFormUpdate($id)
     {
-        $result = nhomnganh::where('ma_nhom', $id)->get();
-        return view('components.admin.NhomNganh.Form');
+        $data = nhomnganh::where('ma_nhom', $id)->first();
+        return view('components.admin.NhomNganh.Form', compact('data'));
     }
 
     public function insert(Request $request)
     {
         $data['ma_nhom'] = $request->code;
-        $data['ten_nhom'] = $request->name;
-        $data['mo_ta'] = $request->description;
-        // return $data;
-        if ($data['mo_ta'] === '<p><br></p>') {
+        $data['ten_nhom_nganh'] = $request->name;
+        $data['mo_ta'] = ltrim(chop($request->description, '</p>'), '<br><p>');
+        $data['ten_nhom_nguoi'] = $request->name1;
+        $data['nganh'] = $request->nganh;
+        // return response()->json($data);
+
+        if (empty($data['ma_nhom']) || empty($data['ten_nhom_nganh']) || empty($data['ten_nhom_nguoi']) || empty($data['mo_ta'])) {
             $err = 'Vui lòng nhập đầy đủ thông tin !';
-            return view('components.admin.NhomNganh.form', compact('err'));
+            return view('components.admin.NhomNganh.form', compact('data', 'err'));
         }
-        return view('components.admin.NhomNganh.form', compact('err'));
-        if (empty($data['mo_ta']) || empty($data['ma_nhom']) || empty($data['ten_nhom'])) {
-            $err = 'Vui lòng nhập đầy đủ thông tin !';
-            return view('components.admin.NhomNganh.form', compact('err'));
-        }
-        // var_dump($data);
-        // die();
+
         $ma_nhom = nhomnganh::where('ma_nhom', $data['ma_nhom'])->get();
         if ($ma_nhom->count() == 1) {
             $err = 'Mã nhóm đã tồn tại !';
-            return view('components.admin.NhomNganh.form', compact('err'));
+            return view('components.admin.NhomNganh.form', compact('data', 'err'));
         }
 
         nhomnganh::create($data);
-        $result = nhomnganh::all();
-        // var_dump($result);
-        // die();
-        return view('components.admin.NhomNganh.index', compact('result'));
+        $alert = "Thêm mới thành công !";
+        session()->flash('alert', $alert);
+        return redirect()->route('nhom-nganh');
+        // return view('components.admin.NhomNganh.index', compact('result', 'alert'));
     }
 
     public function update(Request $request)
     {
         $data['ma_nhom'] = $request->code;
-        $data['ten_nhom'] = $request->name;
-        $data['mo_ta'] = $request->description;
+        $data['ten_nhom_nganh'] = $request->name;
+        $data['mo_ta'] = ltrim(chop($request->description, '</p>'), '<br><p>');
+        $data['ten_nhom_nguoi'] = $request->name1;
+        $data['nganh'] = $request->nganh;
         // return $data;
-        if (empty($data['mo_ta']) || empty($data['ma_nhom']) || empty($data['ten_nhom'])) {
+        if (empty($data['ma_nhom']) || empty($data['ten_nhom_nguoi']) || empty($data['ten_nhom_nganh']) || empty($data['mo_ta'])) {
             $err = 'Vui lòng nhập đầy đủ thông tin !';
-            return view('components.admin.NhomNganh.form', compact('err'));
+            return view('components.admin.NhomNganh.form', compact('data', 'err'));
         }
 
         $ma_nhom = nhomnganh::where('ma_nhom', $data['ma_nhom'])->get();
-        // var_dump($ma_nhom->count());
-        // die();
+
         if ($ma_nhom->count() == 1) {
             nhomnganh::where('ma_nhom', $data['ma_nhom'])->update($data);
-            $result = nhomnganh::all();
-            return view('components.admin.NhomNganh.index', compact('result'));
+            $alert = 'Cập nhật thành công !';
+            session()->flash('alert', $alert);
+            return redirect()->route('nhom-nganh');
         }
+    }
+
+    public function delete($id)
+    {
+        nhomnganh::where('ma_nhom', $id)->delete();
+        $alert = "Xóa nhóm ngành thành công !";
+        session()->flash('alert', $alert);
+        return redirect()->route('nhom-nganh');
     }
 }

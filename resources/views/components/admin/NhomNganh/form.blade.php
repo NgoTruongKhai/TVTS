@@ -25,15 +25,39 @@
                             <form onsubmit="prepareDiv()" action="" method="POST">
                                 @csrf
                                 <div class="row mb-3">
-                                    <label for="code" class="col-sm-2 col-form-label">Mã</label>
+                                    <label for="code" class="col-sm-2 col-form-label">Mã Nhóm</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="code" name='code'>
+                                        <input type="text" class="form-control" id="code" name='code'
+                                            @isset($data)
+                                            value="{{ $data['ma_nhom'] }}"
+                                        @endisset>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label for="name" class="col-sm-2 col-form-label">Tên</label>
+                                    <label for="name" class="col-sm-2 col-form-label">Tên Nhóm</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="name" name="name">
+                                        <input type="text" class="form-control" id="name" name="name"
+                                            @isset($data)
+                                        value="{{ $data['ten_nhom_nganh'] }}"
+                                    @endisset>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="name" class="col-sm-2 col-form-label">Nhóm người</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="name" name="name1"
+                                            @isset($data)
+                                        value="{{ $data['ten_nhom_nguoi'] }}"
+                                    @endisset>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="name" class="col-sm-2 col-form-label">Các ngành liên quan</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="name" name="nganh"
+                                            @isset($data)
+                                        value="{{ $data['nganh'] }}"
+                                    @endisset>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -43,14 +67,17 @@
                                             <div class="card-body">
                                                 <textarea name="description" id="description_hidden" hidden></textarea>
                                                 <div class="quill-editor-bubble">
+                                                    @isset($data)
+                                                        {{ $data['mo_ta'] }}
+                                                    @endisset
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="text-center">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                        {{-- <button type="reset" class="btn btn-secondary">Reset</button> --}}
-                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary">Lưu</button>
+                                </div>
                             </form>
                         </div>
                     </div>

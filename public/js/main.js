@@ -325,3 +325,114 @@ function prepareDiv() {
     let content = document.querySelector(".ql-editor");
     document.getElementById("description_hidden").value = content.innerHTML;
 }
+
+
+
+function addField(plusElement) {
+
+    let displayButton = document.querySelector(".btn-bottom");
+
+    // Stopping the function if the input field has no value.
+    if (plusElement.previousElementSibling.value.trim() === "") {
+        return false;
+    }
+
+    // creating the div container.
+    let div1 = document.createElement("div");
+    div1.setAttribute("class", "row mb-3");
+
+    let label = document.createElement("label");
+    label.setAttribute("class", "mb-2");
+
+    div1.appendChild(label);
+
+    let div = document.createElement("div");
+    div.setAttribute("class", "col-sm-12 d-sm-flex field");
+
+    div1.appendChild(div);
+    // Creating the input element.
+    let field = document.createElement("input");
+    field.setAttribute("type", "text");
+    field.setAttribute("name", "noi_dung[]");
+    field.setAttribute("class", "form-control ");
+
+    // Creating the plus span element.
+    let plus = document.createElement("span");
+
+    plus.setAttribute("onclick", "addField(this)");
+    plus.setAttribute("class", "btn btn-secondary ms-2");
+    let plusText = document.createTextNode("+");
+    plus.appendChild(plusText);
+
+    // Creating the minus span element.
+    let minus = document.createElement("span");
+    minus.setAttribute("onclick", "removeField(this)");
+    minus.setAttribute("class", "btn btn-secondary ms-2");
+
+    let minusText = document.createTextNode("-");
+    minus.appendChild(minusText);
+
+    // Adding the elements to the DOM.
+    form.insertBefore(div1, displayButton);
+    div.appendChild(field);
+    div.appendChild(plus);
+    div.appendChild(minus);
+    // Un hiding the minus sign.
+    plusElement.nextElementSibling.style.display = "block"; // the minus sign
+    // Hiding the plus sign.
+    plusElement.style.display = "none"; // the plus sign
+    minus.style.display = "none";
+}
+// alert(document.getElementsByClassName("field")[0].innerHTML);
+document.getElementsByClassName("field")[0].querySelector('span').nextElementSibling.style.display = "none";
+
+function removeField(minusElement) {
+    minusElement.parentNode.previousElementSibling.parentNode.remove();
+    // minusElement.parentNode.remove();
+
+}
+
+let form = document.forms[1];
+
+function markAsDone(element) {
+    element.classList.add("mark");
+    element.innerHTML = "&check;";
+}
+
+
+function setluat(item) {
+    document.getElementById('ma_luat').value = item.ma_luat;
+    document.getElementById('noi_dung').value = item.noi_dung;
+}
+
+function setketluan(item) {
+    document.getElementById('ma_kl').value = item.ma_kl;
+    document.getElementById('noi_dung').value = item.noi_dung;
+    document.getElementById('mo_ta').value = item.mo_ta;
+}
+
+function setcauhoi(item) {
+    document.getElementById('ID').value = item.id;
+    document.getElementById('noi_dung').value = item.noi_dung;
+}
+
+function setcautraloi(item) {
+
+    document.getElementById('ID').value = item.id;
+    console.log(item);
+    document.getElementById('nhomnganh').value = item.ma_nhom_nganh;
+    document.getElementById('cauhoi').value = item.id_cau_hoi;
+    // document.getElementById('ID').value = item.id;
+    document.getElementById('noi_dung').value = item.noi_dung;
+    document.getElementById('hidden').style.display = 'none';
+}
+
+function stepnext() {
+
+    document.getElementsByClassName('is-active')[0].classList.add('step');
+    var elem = document.getElementsByClassName('is-active');
+    elem[0].nextSibling.nextSibling.classList.add('is-active');
+    document.getElementsByClassName('is-active')[0].classList.remove('is-active');
+
+
+}

@@ -22,7 +22,8 @@
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="#">Tư vấn theo sở thích và khả năng</a></li>
+                        <li><a class="dropdown-item" href="{{ route('TVTS-kethop') }}">Tư vấn theo sở thích và khả
+                                năng</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">

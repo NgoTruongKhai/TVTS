@@ -16,18 +16,28 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                        <div>
-                            <a class="btn btn-success float-end me-5 mt-2" href="{{ route('add-nhom-nganh') }}">Thêm</a>
-                        </div>
+
+
+                        @if (Session::has('alert'))
+                            @include('components.message.alert')
+                        @endif
+
+
                         <div class="card-body">
+                            <div class="card-title mt-0 fw-bold p-0 text-center fs-4">Danh sách nhóm ngành</div>
+                            <div>
+                                <a class="btn btn-success float-end  mt-2 ms-3 "
+                                    href="{{ route('add-nhom-nganh') }}">Thêm</a>
+                            </div>
                             <!-- Table with stripped rows -->
                             <table class="table datatable">
                                 <thead>
                                     <tr>
-                                        <th scope="col">#</th>
                                         <th scope="col">Mã Nhóm</th>
                                         <th scope="col">Tên Nhóm</th>
-                                        <th scope="col">Mô Tả</th>
+                                        <th scope="col">Nhóm người</th>
+                                        <th scope="col">Mô tả</th>
+                                        <th scope="col">Các ngành học liên quan</th>
                                         <th scope="col">Cập nhật</th>
                                         <th scope="col"></th>
                                     </tr>
@@ -37,19 +47,21 @@
                                         {{ $err }}
                                     @endif
                                     @if (isset($result))
-                                        @php
-                                            $index = 1;
-                                        @endphp
                                         @foreach ($result as $item)
                                             <tr>
-                                                <th scope="row">{{ $index++ }}</th>
                                                 <td>{{ $item->ma_nhom }}</td>
-                                                <td>{{ $item->ten_nhom }}</td>
+                                                <td>{{ $item->ten_nhom_nganh }}</td>
+                                                <td>{{ $item->ten_nhom_nguoi }}</td>
                                                 <td>{{ $item->mo_ta }}</td>
-                                                <td>{{ $item->created_at }}</td>
+                                                <td>{{ $item->nganh }}</td>
+                                                <td>{{ $item->updated_at }}</td>
                                                 <td>
-                                                    <button class="btn btn-danger rounded-pill">Xóa</button>
-                                                    <button class="btn btn-warning rounded-pill">Sửa</button>
+                                                    <a href="{{ route('delete-nhom-nganh', ['id' => $item->ma_nhom]) }}"
+                                                        class="btn btn-danger rounded-pill" data-bs-toggle="modal"
+                                                        data-bs-target="#exampleModal"
+                                                        onclick="return follow(this);">Xóa</a>
+                                                    <a href="{{ route('form-update-nhom-nganh', ['id' => $item->ma_nhom]) }}"
+                                                        class="btn btn-warning rounded-pill">Sửa</a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -65,6 +77,8 @@
                 </div>
             </div>
         </section>
-
+        <!--comfirm delete--->
+        @include('components.message.confirm')
+        <!--comfirm delete--->
     </main><!-- End #main -->
 @endsection

@@ -21,6 +21,7 @@
     <link href="{{ asset('vendor/simple-datatables/style.css') }}" rel="stylesheet">
 
 
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
         integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous">
     </script>
@@ -29,7 +30,7 @@
     </script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </head>
 
 <body>
@@ -40,16 +41,17 @@
     @yield('content')
     {{-- Footer --}}
     @include('layouts.admin.inc.footer')
-    <script src="{{ asset('vendor/apexcharts/apexcharts.min.js') }}"></script>
-    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('vendor/chart.js/chart.umd.js') }}"></script>
-    <script src="{{ asset('vendor/echarts/echarts.min.js') }}"></script>
-    <script src="{{ asset('vendor/quill/quill.min.js') }}"></script>
-    <script src="{{ asset('vendor/simple-datatables/simple-datatables.js') }}"></script>
-    <script src="{{ asset('vendor/tinymce/tinymce.min.js') }}"></script>
-    <script src="{{ asset('vendor/php-email-form/validate.js') }}"></script>
-    <script src="{{ asset('js/main.js') }}"></script>
 
 </body>
+<script src="{{ asset('vendor/apexcharts/apexcharts.min.js') }}"></script>
+<script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('vendor/chart.js/chart.umd.js') }}"></script>
+<script src="{{ asset('vendor/echarts/echarts.min.js') }}"></script>
+<script src="{{ asset('vendor/quill/quill.min.js') }}"></script>
+<script src="{{ asset('vendor/simple-datatables/simple-datatables.js') }}"></script>
+<script src="{{ asset('vendor/tinymce/tinymce.min.js') }}"></script>
+<script src="{{ asset('vendor/php-email-form/validate.js') }}"></script>
+<script src="{{ asset('js/main.js') }}"></script>
+{{-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.1/mdb.min.js"></script> --}}
 
 </html>
