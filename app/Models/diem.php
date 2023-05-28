@@ -14,6 +14,6 @@ class diem extends Model
         'ma_nganh',
         'nam',
         'diem',
-        'khoi_thi'
+        'khoi_thi',
     ];
 }

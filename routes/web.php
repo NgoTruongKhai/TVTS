@@ -5,6 +5,7 @@ use App\Http\Controllers\admin\CauTraLoiController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\DiemController;
 use App\Http\Controllers\admin\KetLuanController;
+use App\Http\Controllers\admin\KhoiThiController;
 use App\Http\Controllers\admin\LuatController;
 use App\Http\Controllers\admin\NganhController;
 use App\Http\Controllers\admin\NhomNganhController;
@@ -76,7 +77,8 @@ Route::post('/TVTS-kethop', [TVTSController::class, 'result'])->name('result-ket
 
 
 
-Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::get('admin/login', [LoginController::class, 'index'])->name('login');
+Route::post('admin/login', [LoginController::class, 'login']);
 
 
 Route::prefix('admin')->group(function () {
@@ -85,7 +87,6 @@ Route::prefix('admin')->group(function () {
 
     //ngành
     Route::get('nganh', [NganhController::class, 'index'])->name('nganh');
-
     Route::get('nganh/form', [NganhController::class, 'loadForm'])->name('add-nganh');
     Route::post('nganh/form', [NganhController::class, 'insert'])->name('add-nganh');
 
@@ -97,6 +98,9 @@ Route::prefix('admin')->group(function () {
     Route::get('diem', [DiemController::class, 'index'])->name('diem');
     Route::post('diem', [DiemController::class, 'import'])->name('import-diem');
 
+    Route::get('khoi-thi', [KhoiThiController::class, 'index'])->name('khoi-thi');
+    Route::post('khoi-thi', [KhoiThiController::class, 'insert'])->name('khoi-thi');
+    Route::delete('khoi-thi/delete/{id}', [KhoiThiController::class, 'delete'])->name('delete-khoi-thi');
 
     //nhóm ngành
     Route::get('/nhom-nganh', [NhomNganhController::class, 'index'])->name('nhom-nganh');

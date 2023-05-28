@@ -79,13 +79,10 @@ class DiemController extends Controller
 
     public function import(Request $request)
     {
-        // return $request;
-        $validatedData = $request->validate([
-            'file' => 'required',
-        ]);
+
         $file = $request->file('file');
 
-        Excel::import(new DiemImport(), $file);
-        return redirect()->route('diem');
+        Excel::import(new DiemImport, $file);
+        return back();
     }
 }

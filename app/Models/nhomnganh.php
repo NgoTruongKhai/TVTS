@@ -14,6 +14,6 @@ class nhomnganh extends Model
         'ten_nhom_nganh',
         'mo_ta',
         'ten_nhom_nguoi',
-        'nganh'
+        'nganh',
     ];
 }

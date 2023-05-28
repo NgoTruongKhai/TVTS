@@ -24,6 +24,11 @@
                         <i class="bi bi-circle"></i><span>Điểm</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('khoi-thi') }}">
+                        <i class="bi bi-circle"></i><span>Khối thi</span>
+                    </a>
+                </li>
             </ul>
         </li><!-- End Components Nav -->
 

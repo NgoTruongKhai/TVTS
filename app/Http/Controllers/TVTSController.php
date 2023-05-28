@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Country;
 use App\Models\diem;
 use App\Models\hocluc;
+use App\Models\ketluan;
 use App\Models\khanang;
 use App\Models\khoithi;
 use App\Models\monthi;
@@ -42,7 +43,7 @@ class TVTSController extends Controller
         $nam = diem::max('nam');
         // return $nam;
         $ma_nganh = diem::where('diem', '<=', $sumdiem)->where('khoi_thi', $khoithi)->where('nam', $nam)->select('ma_nganh')->get();
-
+        // return $ma_nganh;
         $nganh = nganh::whereIn('ma_nganh', $ma_nganh)->get();
         $khoithi = khoithi::all();
         return view('components.diem.form', compact('khoithi', 'nganh'));
@@ -105,17 +106,25 @@ class TVTSController extends Controller
 
     public function result(Request $request)
     {
-        return response()->json($request);
-        $advisor = new SuyDienController();
+        // return response()->json($request);
         $userprofile['so_thich'] = $request->so_thich;
         $userprofile['kha_nang'] = $request->kha_nang;
         $userprofile['hoc_luc'] = $request->hoc_luc;
-        $userprofile['nganh_nghe'] = $request->nganh_nghe;
+        $userprofile['nganh_nghe'] = $request->nhom_nganh;
         $userprofile['khoi_thi'] = $request->khoi_thi;
 
+        // return $userprofile;
+        $advisor = new SuyDienController();
+        // return response()->json($advisor->rules());
         $advisor->addUserProfile($userprofile);
         $recommendedMajors = $advisor->recommendMajor();
 
-        return response()->json($recommendedMajors);
+        $ma_nganh = ketluan::whereIn('ma_kl', $recommendedMajors)->select('noi_dung')->get();
+        $nganh = nganh::whereIn('ma_nganh', $ma_nganh)->get();
+        $nhomnganh = nhomnganh::all();
+        $hocluc = hocluc::all();
+        $sothich = sothich::all();
+        $khanang = khanang::all();
+        return view('components.kethop.index', compact('nhomnganh', 'hocluc', 'khanang', 'sothich', 'nganh'));
     }
 }

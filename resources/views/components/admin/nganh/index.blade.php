@@ -16,9 +16,6 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                        <div>
-                            <a class="btn btn-success float-end me-5 mt-2" href="{{ route('add-nganh') }}">Thêm</a>
-                        </div>
 
                         @if (Session::has('alert'))
                             @include('components.message.alert')
@@ -26,7 +23,11 @@
 
 
                         <div class="card-body">
+                            <div class="card-title fw-bold fs-4 text-center p-0">Danh sách các ngành học</div>
 
+                            <div class="me-0 p">
+                                <a class="btn btn-success float-end ms-4 mt-2" href="{{ route('add-nganh') }}">Thêm</a>
+                            </div>
                             <!-- Table with stripped rows -->
                             <table class="table datatable">
                                 <thead>

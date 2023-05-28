@@ -20,6 +20,7 @@
                             @include('components.message.alert')
                         @endif
                         <div class="card-body">
+                            <div class="card-title fw-bold fs-4 text-center">Danh sách các kết luận</div>
 
                             <!-- Table with stripped rows -->
                             <table class="table datatable ">

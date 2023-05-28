@@ -427,6 +427,7 @@ function setcautraloi(item) {
     document.getElementById('hidden').style.display = 'none';
 }
 
+
 function stepnext() {
 
     document.getElementsByClassName('is-active')[0].classList.add('step');
