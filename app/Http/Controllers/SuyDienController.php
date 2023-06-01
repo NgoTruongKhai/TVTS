@@ -14,12 +14,17 @@ class SuyDienController extends Controller
 {
     private $knowledgeBase; // Cơ sở tri thức
     private $userProfile; // Hồ sơ người dùng
-
+    private $kl;
     public function __construct()
     {
         // $this->knowledgeBase = $knowledgeBase;
         $this->knowledgeBase = $this->rules();
         $this->userProfile = [];
+        $ketluan = ketluan::select('ma_kl')->get();
+
+        foreach ($ketluan as $key => $value) {
+            $this->kl[] = $value->ma_kl;
+        }
     }
 
     public function rules()
@@ -42,14 +47,14 @@ class SuyDienController extends Controller
     {
         // Tạo danh sách ngành học được đề xuất
         $recommendedMajors = [];
-        $ketluan = ketluan::select('ma_kl')->get();
-
-        foreach ($ketluan as $key => $value) {
-            $tmp[] = $value->ma_kl;
-        }
         foreach ($this->knowledgeBase as $major => $requirements) {
             // Kiểm tra xem ngành học có đáp ứng yêu cầu hồ sơ người dùng không
             foreach ($requirements as $key => $value) {
+                // var_dump($value);
+                // echo '</br>';
+                // var_dump($this->userProfile);
+                // echo '</br>';
+                // die;
                 $requirementsMet = true;
                 foreach ($value as $item) {
                     if (!in_array($item, $this->userProfile)) {
@@ -57,19 +62,18 @@ class SuyDienController extends Controller
                         break;
                     }
                 }
-
-                if (!in_array($key, $tmp)) {
+                if (!in_array($key, $this->kl) && !in_array($key, $this->userProfile)) {
                     $this->userProfile[] = $key;
                     unset($this->knowledgeBase[$major]);
                     return $this->recommendMajor();
                 }
-
+                // var_dump($requirementsMet);
                 if ($requirementsMet && !in_array($key, $recommendedMajors)) {
+
                     $recommendedMajors[] = $key;
                 }
             }
         }
-
         return $recommendedMajors;
     }
 }

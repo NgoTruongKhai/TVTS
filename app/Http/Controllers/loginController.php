@@ -19,17 +19,19 @@ class LoginController extends Controller
     {
         try {
             $request->validate([
-                'email' => 'email|required',
+                'email' => 'required',
                 'password' => 'required'
             ]);
 
             $credentials = request(['email', 'password']);
 
             if (!Auth::attempt($credentials)) {
-                return response()->json([
-                    'status_code' => 500,
-                    'message' => 'Unauthorized'
-                ]);
+                session()->flash('err', 'Tài khoản hoặc mật khấu không đúng !');
+                return redirect()->route('login');
+                // return response()->json([
+                //     'status_code' => 500,
+                //     'message' => 'Unauthorized'
+                // ]);
             }
 
             $user = User::where('email', $request->email)->first();
@@ -37,6 +39,8 @@ class LoginController extends Controller
             if (!Hash::check($request->password, $user->password, [])) {
                 throw new \Exception('Error in Login');
             }
+
+            return redirect()->route('nhom-nganh');
 
             $tokenResult = $user->createToken('authToken')->plainTextToken;
 
@@ -46,11 +50,27 @@ class LoginController extends Controller
                 'token_type' => 'Bearer',
             ]);
         } catch (\Exception $error) {
-            return response()->json([
-                'status_code' => 500,
-                'message' => 'Error in Login',
-                'error' => $error,
-            ]);
+            session()->flash('err', $error->getMessage());
+            return redirect()->route('login');
+            // return response()->json([
+            //     'status_code' => 500,
+            //     'message' => 'Error in Login try catch',
+            //     'error' => $error->getMessage(),
+            // ]);
         }
+    }
+    public function register()
+    {
+        User::create([
+            'email' => 'admin@gmail.com',
+            'name' => 'admin',
+            'password' => Hash::make('admin')
+        ]);
+        return 'register';
+    }
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->back();
     }
 }

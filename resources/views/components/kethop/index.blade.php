@@ -22,8 +22,13 @@
                                         name="nhom_nganh">
                                         @isset($nhomnganh)
                                             @foreach ($nhomnganh as $item)
-                                                <option value="{{ $item->ma_nhom }}">{{ $item->ten_nhom_nganh }}
-                                                </option>
+                                                @if (isset($userprofile) && $userprofile['nganh_nghe'] == $item->ma_nhom)
+                                                    <option value="{{ $item->ma_nhom }}" selected>{{ $item->ten_nhom_nganh }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $item->ma_nhom }}">{{ $item->ten_nhom_nganh }}
+                                                    </option>
+                                                @endif
                                             @endforeach
                                         @endisset
                                     </select>
@@ -36,26 +41,31 @@
                                         aria-label=".form-select-sm example">
                                         @isset($hocluc)
                                             @foreach ($hocluc as $item)
-                                                <option value="{{ $item->ma_hl }}">{{ $item->noi_dung }}
-                                                </option>
+                                                @if (isset($userprofile) && $userprofile['hoc_luc'] == $item->ma_hl)
+                                                    <option value="{{ $item->ma_hl }}" selected>{{ $item->noi_dung }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $item->ma_hl }}">{{ $item->noi_dung }}
+                                                    </option>
+                                                @endif
                                             @endforeach
                                         @endisset
 
                                     </select>
                                 </div>
                             </div>
-                            <div class="row mb-3">
+                            {{-- <div class="row mb-3">
                                 <label for="code" class="col-sm-2 col-form-label offset-md-2">Khối thi</label>
                                 <div class="col-sm-6 ">
                                     <select name="khoi_thi" class="form-select form-select-sm"
                                         aria-label=".form-select-sm example">
-                                        <option value="A">Khối A</option>
-                                        <option value="B">Khối B</option>
-                                        <option value="C">Khối C</option>
-                                        <option value="C">Khối D</option>
+                                        <option value="K1">Khối A</option>
+                                        <option value="K2">Khối B</option>
+                                        <option value="K3">Khối C</option>
+                                        <option value="k4">Khối D</option>
                                     </select>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="row mb-3">
                                 <label for="name" class="col-sm-2 col-form-label offset-md-2">Sở thích</label>
                                 <div class="col-sm-6">
@@ -63,8 +73,13 @@
                                         name="so_thich">
                                         @isset($sothich)
                                             @foreach ($sothich as $item)
-                                                <option value="{{ $item->ma_st }}">{{ $item->noi_dung }}
-                                                </option>
+                                                @if (isset($userprofile) && $userprofile['so_thich'] == $item->ma_st)
+                                                    <option value="{{ $item->ma_st }}" selected>{{ $item->noi_dung }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $item->ma_st }}">{{ $item->noi_dung }}
+                                                    </option>
+                                                @endif
                                             @endforeach
                                         @endisset
                                     </select>
@@ -77,8 +92,13 @@
                                         name="kha_nang">
                                         @isset($khanang)
                                             @foreach ($khanang as $item)
-                                                <option value="{{ $item->ma_kn }}">{{ $item->noi_dung }}
-                                                </option>
+                                                @if (isset($userprofile) && $userprofile['kha_nang'] == $item->ma_kn)
+                                                    <option value="{{ $item->ma_kn }}" selected>{{ $item->noi_dung }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $item->ma_kn }}">{{ $item->noi_dung }}
+                                                    </option>
+                                                @endif
                                             @endforeach
                                         @endisset
                                     </select>

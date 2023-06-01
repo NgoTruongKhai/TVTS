@@ -79,9 +79,11 @@ Route::post('/TVTS-kethop', [TVTSController::class, 'result'])->name('result-ket
 
 Route::get('admin/login', [LoginController::class, 'index'])->name('login');
 Route::post('admin/login', [LoginController::class, 'login']);
+Route::get('/register', [LoginController::class, 'register']);
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/', [DashboardController::class, 'index']);
 

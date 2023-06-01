@@ -111,7 +111,7 @@ class TVTSController extends Controller
         $userprofile['kha_nang'] = $request->kha_nang;
         $userprofile['hoc_luc'] = $request->hoc_luc;
         $userprofile['nganh_nghe'] = $request->nhom_nganh;
-        $userprofile['khoi_thi'] = $request->khoi_thi;
+        // $userprofile['khoi_thi'] = $request->khoi_thi;
 
         // return $userprofile;
         $advisor = new SuyDienController();
@@ -125,6 +125,6 @@ class TVTSController extends Controller
         $hocluc = hocluc::all();
         $sothich = sothich::all();
         $khanang = khanang::all();
-        return view('components.kethop.index', compact('nhomnganh', 'hocluc', 'khanang', 'sothich', 'nganh'));
+        return view('components.kethop.index', compact('nhomnganh', 'hocluc', 'khanang', 'sothich', 'nganh', 'userprofile'));
     }
 }
